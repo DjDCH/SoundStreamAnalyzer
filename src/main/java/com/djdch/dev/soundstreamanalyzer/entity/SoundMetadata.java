@@ -1,4 +1,4 @@
-package com.djdch.dev.soundstreamvisualizer.entity;
+package com.djdch.dev.soundstreamanalyzer.entity;
 
 import ddf.minim.analysis.FFT;
 

@@ -1,4 +1,4 @@
-package com.djdch.dev.soundstreamvisualizer.swing;
+package com.djdch.dev.soundstreamanalyzer.swing;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -6,7 +6,7 @@ import java.awt.Font;
 import java.awt.Graphics;
 import javax.swing.JComponent;
 
-public class VisualizerBeat2Component extends JComponent {
+public class VisualizerBeatComponent extends JComponent {
 
     private static final int PREFERRED_WIDTH = 120;
     private static final int PREFERRED_HEIGHT = 300;
@@ -23,13 +23,12 @@ public class VisualizerBeat2Component extends JComponent {
     private long last;
     private float fast;
     private float slow;
-    private boolean reversed;
 
-    public VisualizerBeat2Component(String name) {
+    public VisualizerBeatComponent(String name) {
         this(name, 0.0f, 1.0f);
     }
 
-    public VisualizerBeat2Component(String name, float min, float max) {
+    public VisualizerBeatComponent(String name, float min, float max) {
         this.name = name;
         this.min = min;
         this.max = max;
@@ -56,26 +55,19 @@ public class VisualizerBeat2Component extends JComponent {
             fast = min;
         }
 
-        if (reversed) {
-            slow -= 0.0015f;
-
-            if (slow < 0.40f) {
-                reversed = false;
-            }
-        } else {
+        if (slow < max) {
             slow += 0.0015f;
         }
 
-        if (slow > 0.65f) {
-            slow = 0.65f;
-            reversed = true;
+        if (slow > 0.8f) {
+            slow = 0.8f;
         }
 
         if (enabled) {
-            last -= 75;
+            last -= 85;
 
-            if (last > 800) {
-                last = 800;
+            if (last > 1000) {
+                last = 1000;
             }
 
             if (last < 0) {
@@ -86,19 +78,15 @@ public class VisualizerBeat2Component extends JComponent {
 //            slow = max;
 
 //            slow = ((1.0f - ((float) last / 1000.0f)) * 0.5f) + 0.5f; // Should give something between 0.5f and 1.0f
-            slow = ((float) last / 800.0f) * 0.35f; // Should give something between 0.0f and 0.35f
+            slow = ((float) last / 1000.0f) * 0.35f; // Should give something between 0.0f and 0.35f
 
             enabled = false;
-            reversed = false;
         }
 
         s = max - fast;
         v = 0.8f + (fast * 0.2f);
+        h = slow;
 //        h = (0.9f + slow) % 1.0f;
-        h = 0.15f - slow;
-        if (h < 0.0f) {
-            h = 1.0f - (h * -1.0f);
-        }
 
         repaint();
     }

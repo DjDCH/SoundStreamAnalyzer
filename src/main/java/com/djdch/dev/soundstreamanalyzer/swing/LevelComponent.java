@@ -1,4 +1,4 @@
-package com.djdch.dev.soundstreamvisualizer.swing;
+package com.djdch.dev.soundstreamanalyzer.swing;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -6,7 +6,7 @@ import java.awt.Font;
 import java.awt.Graphics;
 import javax.swing.JComponent;
 
-public class PitchComponent extends JComponent {
+public class LevelComponent extends JComponent {
 
     private static final int PREFERRED_WIDTH = 120;
     private static final int PREFERRED_HEIGHT = 300;
@@ -17,11 +17,11 @@ public class PitchComponent extends JComponent {
     private float min;
     private float max;
 
-    public PitchComponent(String name) {
+    public LevelComponent(String name) {
         this(name, 0.0f, 1.0f);
     }
 
-    public PitchComponent(String name, float min, float max) {
+    public LevelComponent(String name, float min, float max) {
         this.name = name;
         this.min = min;
         this.max = max;
@@ -47,17 +47,8 @@ public class PitchComponent extends JComponent {
         g.setColor(Color.WHITE);
         g.fillRect(0, 0, getWidth(), getHeight());
 
-        g.setColor(Color.BLUE);
-        g.fillRect(0, getHeight() / 8, getWidth(), 1);
-        g.fillRect(0, getHeight() / 4, getWidth(), 1);
-        g.fillRect(0, (getHeight() / 8) * 3, getWidth(), 1);
-        g.fillRect(0, getHeight() / 2, getWidth(), 1);
-        g.fillRect(0, (getHeight() / 8) * 5, getWidth(), 1);
-        g.fillRect(0, (getHeight() / 4) * 3, getWidth(), 1);
-        g.fillRect(0, (getHeight() / 8) * 7, getWidth(), 1);
-
-        g.setColor(Color.GREEN);
-        g.fillRect(0, getHeight() - height - 1, getWidth(), 3);
+        g.setColor(Color.CYAN);
+        g.fillRect(0, getHeight() - height, getWidth(), height);
 
         g.setColor(Color.BLACK);
         g.setFont(new Font("default", Font.BOLD, 15));

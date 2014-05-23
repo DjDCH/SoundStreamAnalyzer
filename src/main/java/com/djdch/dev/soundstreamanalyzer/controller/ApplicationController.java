@@ -1,11 +1,11 @@
-package com.djdch.dev.soundstreamvisualizer.controller;
+package com.djdch.dev.soundstreamanalyzer.controller;
 
-import com.djdch.dev.soundstreamvisualizer.runnable.AudioInputListener;
-import com.djdch.dev.soundstreamvisualizer.runnable.MetersRefresher;
-import com.djdch.dev.soundstreamvisualizer.runnable.SoundAnalyzer;
-import com.djdch.dev.soundstreamvisualizer.runnable.SoundListener;
-import com.djdch.dev.soundstreamvisualizer.swing.ApplicationFrame;
-import com.djdch.dev.soundstreamvisualizer.util.SampleQueue;
+import com.djdch.dev.soundstreamanalyzer.runnable.AudioInputListener;
+import com.djdch.dev.soundstreamanalyzer.runnable.MetersRefresher;
+import com.djdch.dev.soundstreamanalyzer.runnable.SoundAnalyzer;
+import com.djdch.dev.soundstreamanalyzer.runnable.SoundListener;
+import com.djdch.dev.soundstreamanalyzer.swing.ApplicationFrame;
+import com.djdch.dev.soundstreamanalyzer.util.SampleQueue;
 
 import ddf.minim.AudioInput;
 import ddf.minim.Minim;

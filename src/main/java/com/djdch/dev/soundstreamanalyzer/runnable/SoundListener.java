@@ -1,4 +1,4 @@
-package com.djdch.dev.soundstreamvisualizer.runnable;
+package com.djdch.dev.soundstreamanalyzer.runnable;
 
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioSystem;
@@ -7,9 +7,9 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.SourceDataLine;
 import javax.sound.sampled.TargetDataLine;
 
-import com.djdch.dev.soundstreamvisualizer.controller.ApplicationController;
-import com.djdch.dev.soundstreamvisualizer.util.SampleQueue;
-import com.djdch.dev.soundstreamvisualizer.util.SSVAudioFormat;
+import com.djdch.dev.soundstreamanalyzer.controller.ApplicationController;
+import com.djdch.dev.soundstreamanalyzer.util.SampleQueue;
+import com.djdch.dev.soundstreamanalyzer.util.SSVAudioFormat;
 
 public class SoundListener implements Runnable {
 

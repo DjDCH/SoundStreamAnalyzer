@@ -1,16 +1,15 @@
-package com.djdch.dev.soundstreamvisualizer.swing;
+package com.djdch.dev.soundstreamanalyzer.swing;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
-import java.awt.SystemTray;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Random;
 import javax.swing.JPanel;
 
 import com.djdch.dev.serialtoarduinoled.serial.SerialLink;
-import com.djdch.dev.soundstreamvisualizer.entity.SoundMetadata;
+import com.djdch.dev.soundstreamanalyzer.entity.SoundMetadata;
 
 public class MetersPanel extends JPanel implements Observer {
 

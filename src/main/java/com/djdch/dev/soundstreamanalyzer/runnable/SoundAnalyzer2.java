@@ -1,15 +1,15 @@
-package com.djdch.dev.soundstreamvisualizer.runnable;
+package com.djdch.dev.soundstreamanalyzer.runnable;
 
 import java.util.Observable;
 import javax.sound.sampled.AudioFormat;
 
 import org.apache.commons.lang3.ArrayUtils;
 
-import com.djdch.dev.soundstreamvisualizer.controller.ApplicationController;
-import com.djdch.dev.soundstreamvisualizer.entity.SoundMetadata;
-import com.djdch.dev.soundstreamvisualizer.util.SSVAudioFormat;
-import com.djdch.dev.soundstreamvisualizer.util.SampleQueue;
-import com.djdch.dev.soundstreamvisualizer.util.SoundTools;
+import com.djdch.dev.soundstreamanalyzer.controller.ApplicationController;
+import com.djdch.dev.soundstreamanalyzer.entity.SoundMetadata;
+import com.djdch.dev.soundstreamanalyzer.util.SSVAudioFormat;
+import com.djdch.dev.soundstreamanalyzer.util.SampleQueue;
+import com.djdch.dev.soundstreamanalyzer.util.SoundTools;
 
 public class SoundAnalyzer2 extends Observable implements Runnable {
 

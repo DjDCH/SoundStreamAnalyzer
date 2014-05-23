@@ -1,27 +1,23 @@
-package com.djdch.dev.soundstreamvisualizer.swing;
+package com.djdch.dev.soundstreamanalyzer.swing;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
-import java.awt.GridLayout;
 import java.awt.KeyEventDispatcher;
 import java.awt.KeyboardFocusManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import javax.swing.JButton;
 import javax.swing.JCheckBoxMenuItem;
-import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
 import com.djdch.dev.serialtoarduinoled.serial.SerialLink;
 import com.djdch.dev.serialtoarduinoled.serial.SerialUtil;
-import com.djdch.dev.soundstreamvisualizer.controller.ApplicationController;
+import com.djdch.dev.soundstreamanalyzer.controller.ApplicationController;
 
 public class ApplicationFrame extends JFrame implements KeyEventDispatcher {
 

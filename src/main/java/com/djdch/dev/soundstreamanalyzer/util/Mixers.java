@@ -1,4 +1,4 @@
-package com.djdch.dev.soundstreamvisualizer.util;
+package com.djdch.dev.soundstreamanalyzer.util;
 
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Line;

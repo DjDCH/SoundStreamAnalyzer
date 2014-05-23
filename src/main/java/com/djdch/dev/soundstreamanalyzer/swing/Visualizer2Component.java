@@ -1,4 +1,4 @@
-package com.djdch.dev.soundstreamvisualizer.swing;
+package com.djdch.dev.soundstreamanalyzer.swing;
 
 import java.awt.Color;
 import java.awt.Dimension;

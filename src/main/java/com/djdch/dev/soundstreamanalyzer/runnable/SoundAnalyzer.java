@@ -1,20 +1,22 @@
-package com.djdch.dev.soundstreamvisualizer.runnable;
+package com.djdch.dev.soundstreamanalyzer.runnable;
 
-import java.util.ArrayDeque;
 import java.util.Observable;
+
 import javax.sound.sampled.AudioFormat;
 
-import com.djdch.dev.soundstreamvisualizer.controller.ApplicationController;
-import com.djdch.dev.soundstreamvisualizer.entity.SoundMetadata;
-import com.djdch.dev.soundstreamvisualizer.util.SSVAudioFormat;
-import com.djdch.dev.soundstreamvisualizer.util.SampleQueue;
-import com.djdch.dev.soundstreamvisualizer.util.SoundTools;
+import org.apache.commons.lang3.ArrayUtils;
 
-public class SoundAnalyzer3 extends Observable implements Runnable {
+import com.djdch.dev.soundstreamanalyzer.controller.ApplicationController;
+import com.djdch.dev.soundstreamanalyzer.entity.SoundMetadata;
+import com.djdch.dev.soundstreamanalyzer.util.SSVAudioFormat;
+import com.djdch.dev.soundstreamanalyzer.util.SampleQueue;
+import com.djdch.dev.soundstreamanalyzer.util.SoundTools;
+
+public class SoundAnalyzer extends Observable implements Runnable {
 
     private static final int SAMPLES_ARRAY_SIZE = 5000;
-    private static final int SAMPLES_QUEUE_BUFFER = 35000;
-    private static final int SAMPLES_QUEUE_EXTRA = 300; // XXX: Ideally, we want this value as lower as possible, but the system do not keep up below 350
+    private static final int SAMPLES_QUEUE_BUFFER = 16000; // Was 35000, for 44100Hz
+    private static final int SAMPLES_QUEUE_EXTRA = 50; // Was 300, for 44100Hz // XXX: Ideally, we want this value as lower as possible, but the system do not keep up below 350
     private static final int SAMPLES_QUEUE_SIZE = SAMPLES_QUEUE_BUFFER + SAMPLES_QUEUE_EXTRA;
 
     private final ApplicationController controller;
@@ -24,7 +26,7 @@ public class SoundAnalyzer3 extends Observable implements Runnable {
 
     private boolean running;
 
-    public SoundAnalyzer3(ApplicationController controller) {
+    public SoundAnalyzer(ApplicationController controller) {
         this.controller = controller;
         this.queue = controller.getQueue();
 
@@ -41,11 +43,11 @@ public class SoundAnalyzer3 extends Observable implements Runnable {
         final int samplesQueueBufferSize = format.getFrameSize() * SAMPLES_QUEUE_BUFFER;
         final int samplesQueueExtraSize = format.getFrameSize() * SAMPLES_QUEUE_EXTRA;
         final int samplesQueueSize = format.getFrameSize() * SAMPLES_QUEUE_SIZE;
-        ArrayDeque<Byte> samplesQueue = new ArrayDeque<Byte>();
+        byte[] samplesQueue = new byte[samplesQueueSize];
 
         int iArray = 0;
         int iBuffer = 0;
-        int countBuffer = 0;
+//        int countBuffer = 0;
 
         setChanged();
         notifyObservers(metadata);
@@ -65,14 +67,7 @@ public class SoundAnalyzer3 extends Observable implements Runnable {
 
                 for (byte sample : samples) {
                     samplesArray[iArray++] = sample;
-                    samplesQueue.addLast(sample);
-                    iBuffer++;
-                    countBuffer++;
-
-                    if (iBuffer > samplesQueueBufferSize) { // XXX: Replace with while if you have issues
-                        samplesQueue.removeFirst();
-                        iBuffer--;
-                    }
+                    samplesQueue[iBuffer++] = sample;
                 }
             }
 
@@ -83,10 +78,13 @@ public class SoundAnalyzer3 extends Observable implements Runnable {
                 iArray = 0;
             }
 
-            if (countBuffer >= samplesQueueExtraSize && iBuffer >= samplesQueueBufferSize) {
-                metadata.setSmoothRMS(SoundTools.volumeRMSByte(samplesQueue.toArray(new Byte[samplesQueueBufferSize])));
+            if (iBuffer >= samplesQueueSize) {
+                byte newSamplesArray[] = ArrayUtils.subarray(samplesQueue, samplesQueueExtraSize - 1, samplesQueueSize - 1);
 
-                countBuffer = 0;
+                metadata.setSmoothRMS(SoundTools.volumeRMS(newSamplesArray));
+
+                samplesQueue = ArrayUtils.addAll(newSamplesArray, new byte[samplesQueueExtraSize]);
+                iBuffer = samplesQueueBufferSize;
             }
 
 //            metadata.setCount(0);

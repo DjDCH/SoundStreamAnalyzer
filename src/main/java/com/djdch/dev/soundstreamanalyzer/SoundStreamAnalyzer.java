@@ -1,10 +1,8 @@
-package com.djdch.dev.soundstreamvisualizer;
+package com.djdch.dev.soundstreamanalyzer;
 
-import javax.swing.UIManager;
+import com.djdch.dev.soundstreamanalyzer.swing.ApplicationFrame;
 
-import com.djdch.dev.soundstreamvisualizer.swing.ApplicationFrame;
-
-public class SoundStreamVisualizer {
+public class SoundStreamAnalyzer {
 
     /**
      * @param args Command line arguments.

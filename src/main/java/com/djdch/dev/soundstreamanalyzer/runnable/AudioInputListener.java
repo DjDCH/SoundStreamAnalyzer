@@ -1,9 +1,9 @@
-package com.djdch.dev.soundstreamvisualizer.runnable;
+package com.djdch.dev.soundstreamanalyzer.runnable;
 
 import java.util.Observable;
 
-import com.djdch.dev.soundstreamvisualizer.controller.ApplicationController;
-import com.djdch.dev.soundstreamvisualizer.entity.SoundMetadata;
+import com.djdch.dev.soundstreamanalyzer.controller.ApplicationController;
+import com.djdch.dev.soundstreamanalyzer.entity.SoundMetadata;
 
 import ddf.minim.AudioInput;
 import ddf.minim.AudioListener;

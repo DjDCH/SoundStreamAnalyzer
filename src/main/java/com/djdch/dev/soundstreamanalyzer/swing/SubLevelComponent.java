@@ -1,28 +1,27 @@
-package com.djdch.dev.soundstreamvisualizer.swing;
+package com.djdch.dev.soundstreamanalyzer.swing;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.Graphics;
 import javax.swing.JComponent;
 
-public class LevelComponent extends JComponent {
+public class SubLevelComponent extends JComponent {
 
-    private static final int PREFERRED_WIDTH = 120;
+    private static final int PREFERRED_WIDTH = 15;
     private static final int PREFERRED_HEIGHT = 300;
 
-    private String name;
+    private boolean even;
     private float data;
     private float rawData;
     private float min;
     private float max;
 
-    public LevelComponent(String name) {
-        this(name, 0.0f, 1.0f);
+    public SubLevelComponent(boolean even) {
+        this(even, 0.0f, 200.0f);
     }
 
-    public LevelComponent(String name, float min, float max) {
-        this.name = name;
+    public SubLevelComponent(boolean even, float min, float max) {
+        this.even = even;
         this.min = min;
         this.max = max;
         data = 0.0f;
@@ -47,21 +46,12 @@ public class LevelComponent extends JComponent {
         g.setColor(Color.WHITE);
         g.fillRect(0, 0, getWidth(), getHeight());
 
-        g.setColor(Color.CYAN);
+        if (even) {
+            g.setColor(Color.MAGENTA);
+        } else {
+            g.setColor(Color.ORANGE);
+        }
         g.fillRect(0, getHeight() - height, getWidth(), height);
-
-        g.setColor(Color.BLACK);
-        g.setFont(new Font("default", Font.BOLD, 15));
-        g.drawString(name, 5, 20);
-        g.drawString(String.format("%s", rawData), 5, getHeight()-10);
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public float getData() {

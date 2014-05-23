@@ -1,7 +1,7 @@
-package com.djdch.dev.soundstreamvisualizer.runnable;
+package com.djdch.dev.soundstreamanalyzer.runnable;
 
-import com.djdch.dev.soundstreamvisualizer.controller.ApplicationController;
-import com.djdch.dev.soundstreamvisualizer.swing.ApplicationFrame;
+import com.djdch.dev.soundstreamanalyzer.controller.ApplicationController;
+import com.djdch.dev.soundstreamanalyzer.swing.ApplicationFrame;
 
 public class MetersRefresher implements Runnable {
 

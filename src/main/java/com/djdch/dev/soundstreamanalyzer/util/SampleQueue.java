@@ -1,4 +1,4 @@
-package com.djdch.dev.soundstreamvisualizer.util;
+package com.djdch.dev.soundstreamanalyzer.util;
 
 import java.util.concurrent.ConcurrentLinkedQueue;
 

@@ -1,10 +1,10 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.djdch.dev.soundstreamvisualizer</groupId>
-    <artifactId>soundstreamvisualizer</artifactId>
+    <groupId>com.djdch.dev.soundstreamanalyzer</groupId>
+    <artifactId>soundstreamanalyzer</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <name>SoundStreamVisualizer</name>
+    <name>SoundStreamAnalyzer</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -71,7 +71,7 @@
                         <configuration>
                             <transformers>
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <mainClass>com.djdch.dev.soundstreamvisualizer.SoundStreamVisualizer</mainClass>
+                                    <mainClass>com.djdch.dev.soundstreamanalyzer.SoundStreamAnalyzer</mainClass>
                                 </transformer>
                             </transformers>
                         </configuration>
