@@ -20,6 +20,9 @@
 * http://arduino.cc/en/Tutorial/Fade
 * http://learn.adafruit.com/rgb-led-strips
 
+* http://stackoverflow.com/questions/367706/is-there-a-good-command-line-argument-parser-for-java
+* http://commons.apache.org/proper/commons-cli/introduction.html
+
 ## TODO
 
 * Do a `BaseRunner` for all runnable
