@@ -25,3 +25,8 @@
 * Do a `BaseRunner` for all runnable
 * Do a `BaseComponent` for all component
 * Add a `Color` parameter to the component
+
+## FIXES
+
+* No signal or beat, random color fading
+* Compute BPM and KPM. If BPM is to low compared to KPM, use Kick instead of Beat

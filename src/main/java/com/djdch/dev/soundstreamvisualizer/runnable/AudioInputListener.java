@@ -28,7 +28,7 @@ public class AudioInputListener extends Observable implements AudioListener {
 
         bdetect = new BeatDetect();
         bdetect.detectMode(BeatDetect.SOUND_ENERGY);
-        bdetect.setSensitivity(100);
+//        bdetect.setSensitivity(100);
     }
 
     public void start(AudioInput in) {
@@ -49,6 +49,7 @@ public class AudioInputListener extends Observable implements AudioListener {
         bdetect.detect(in.mix);
 
         metadata.getFFT().forward(in.mix);
+//        metadata.getFFT2().forward(in.mix);
 
         metadata.setKick(fdetect.isKick());
         metadata.setSnare(fdetect.isSnare());

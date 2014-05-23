@@ -8,7 +8,7 @@ import javax.swing.JComponent;
 
 public class LevelComponent extends JComponent {
 
-    private static final int PREFERRED_WIDTH = 150;
+    private static final int PREFERRED_WIDTH = 120;
     private static final int PREFERRED_HEIGHT = 300;
 
     private String name;

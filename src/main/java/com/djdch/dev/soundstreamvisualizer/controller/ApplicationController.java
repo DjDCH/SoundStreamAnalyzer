@@ -13,6 +13,9 @@ import ddf.minim.javasound.JSMinim;
 
 public class ApplicationController {
 
+//    private static final String SERIAL_PORT = "/dev/tty.usbmodemfa1311";
+//    private static final String SERIAL_PORT = "/dev/tty.usbmodemfd121";
+
     private final ApplicationFrame frame;
     private final SampleQueue queue;
 
@@ -27,6 +30,9 @@ public class ApplicationController {
     }
 
     public void start() {
+//        frame.serial.setPortName(SERIAL_PORT);
+//        frame.serial.connect();
+
         AudioInputListener listener = new AudioInputListener(this);
         listener.addObserver(frame.getMetersPanel());
 
@@ -50,7 +56,10 @@ public class ApplicationController {
         Minim minim = new Minim(jsMinim);
 
         AudioInput in = minim.getLineIn();
-        in.enableMonitoring();
+
+        if (frame.monitoring) {
+            in.enableMonitoring();
+        }
 
         listener.start(in);
 
@@ -59,13 +68,15 @@ public class ApplicationController {
     }
 
     public void stop() {
+//        frame.serial.disconnect();
+
 //        minim.stop(); // TODO
 
 //        listener.stop();
 //        analyzer.stop();
         refresher.stop();
 
-        analyzer.deleteObserver(frame.getMetersPanel());
+//        analyzer.deleteObserver(frame.getMetersPanel());
 
         frame.getMetersPanel().reset();
     }

@@ -15,6 +15,7 @@ public class SoundMetadata {
     private volatile boolean beat;
 
     private FFT fft;
+    private FFT fft2;
 
     private volatile float instantRMS;
     private volatile float smoothRMS;
@@ -36,8 +37,12 @@ public class SoundMetadata {
         count = 0.0f;
 
         fft = new FFT(1024, 44100); // FIXME: Get these values from somewhere
-        fft.logAverages(60, 3);
 //        fft.logAverages(11, 1); // FIXME: Get these values from somewhere
+//        fft.logAverages(60, 3);
+        fft.logAverages(22, 3);
+
+        fft2 = new FFT(1024, 44100);
+        fft2.linAverages(30);
 
 //        System.out.println(fft.avgSize());
 
@@ -108,6 +113,14 @@ public class SoundMetadata {
 
     public void setFFT(FFT fft) {
         this.fft = fft;
+    }
+
+    public FFT getFFT2() {
+        return fft2;
+    }
+
+    public void setFFT2(FFT fft2) {
+        this.fft2 = fft2;
     }
 
     public float getInstantRMS() {
