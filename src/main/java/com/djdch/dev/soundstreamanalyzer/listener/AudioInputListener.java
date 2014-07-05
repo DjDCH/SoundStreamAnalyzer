@@ -1,4 +1,4 @@
-package com.djdch.dev.soundstreamanalyzer.runnable;
+package com.djdch.dev.soundstreamanalyzer.listener;
 
 import java.util.Observable;
 
@@ -13,7 +13,7 @@ public class AudioInputListener extends Observable implements AudioListener {
 
     private final ApplicationController controller;
     private final SoundMetadata metadata;
-    private final BeatDetect fdetect;
+//    private final BeatDetect fdetect;
     private final BeatDetect bdetect;
     private AudioInput in;
 
@@ -22,9 +22,9 @@ public class AudioInputListener extends Observable implements AudioListener {
 
         metadata = new SoundMetadata();
 
-        fdetect = new BeatDetect();
-        fdetect.detectMode(BeatDetect.FREQ_ENERGY);
-        fdetect.setSensitivity(100);
+//        fdetect = new BeatDetect();
+//        fdetect.detectMode(BeatDetect.FREQ_ENERGY);
+//        fdetect.setSensitivity(100);
 
         bdetect = new BeatDetect();
         bdetect.detectMode(BeatDetect.SOUND_ENERGY);
@@ -45,20 +45,20 @@ public class AudioInputListener extends Observable implements AudioListener {
 
     @Override
     public void samples(float[] floats, float[] floats2) {
-        fdetect.detect(in.mix);
+//        fdetect.detect(in.mix);
         bdetect.detect(in.mix);
 
-        metadata.getFFT().forward(in.mix);
+//        metadata.getFFT().forward(in.mix);
 //        metadata.getFFT2().forward(in.mix);
 
-        metadata.setKick(fdetect.isKick());
-        metadata.setSnare(fdetect.isSnare());
-        metadata.setHat(fdetect.isHat());
+//        metadata.setKick(fdetect.isKick());
+//        metadata.setSnare(fdetect.isSnare());
+//        metadata.setHat(fdetect.isHat());
 
         metadata.setBeat(bdetect.isOnset());
 
-        metadata.setLeft(in.left.level());
-        metadata.setRight(in.right.level());
-        metadata.setMix(in.mix.level());
+//        metadata.setLeft(in.left.level());
+//        metadata.setRight(in.right.level());
+//        metadata.setMix(in.mix.level());
     }
 }
