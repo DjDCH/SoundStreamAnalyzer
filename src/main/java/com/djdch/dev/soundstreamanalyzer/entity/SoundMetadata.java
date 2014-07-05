@@ -1,7 +1,5 @@
 package com.djdch.dev.soundstreamanalyzer.entity;
 
-import ddf.minim.analysis.FFT;
-
 public class SoundMetadata {
 
     private volatile float left;
@@ -14,14 +12,12 @@ public class SoundMetadata {
 
     private volatile boolean beat;
 
-    private FFT fft;
-    private FFT fft2;
+    private volatile long last;
+    private volatile long length;
 
-    private volatile float instantRMS;
-    private volatile float smoothRMS;
-    private volatile float count;
-    private volatile boolean beat2;
-    private volatile boolean beat3;
+    private float h;
+    private float s;
+    private float v;
 
     public SoundMetadata() {
         reset();
@@ -32,19 +28,12 @@ public class SoundMetadata {
         right = 0.0f;
         mix = 0.0f;
 
-        instantRMS = 0.0f;
-        smoothRMS = 0.0f;
-        count = 0.0f;
+        last = System.currentTimeMillis();
+        length = 0L;
 
-        fft = new FFT(1024, 44100); // FIXME: Get these values from somewhere
-//        fft.logAverages(11, 1); // FIXME: Get these values from somewhere
-//        fft.logAverages(60, 3);
-        fft.logAverages(22, 3);
-
-        fft2 = new FFT(1024, 44100);
-        fft2.linAverages(30);
-
-//        System.out.println(fft.avgSize());
+        h = 0.0f;
+        s = 0.0f;
+        v = 0.0f;
 
         softReset();
     }
@@ -55,8 +44,6 @@ public class SoundMetadata {
         hat = false;
 
         beat = false;
-        beat2 = false;
-        beat3 = false;
     }
 
     public float getLeft() {
@@ -107,46 +94,6 @@ public class SoundMetadata {
         this.hat = hat;
     }
 
-    public FFT getFFT() {
-        return fft;
-    }
-
-    public void setFFT(FFT fft) {
-        this.fft = fft;
-    }
-
-    public FFT getFFT2() {
-        return fft2;
-    }
-
-    public void setFFT2(FFT fft2) {
-        this.fft2 = fft2;
-    }
-
-    public float getInstantRMS() {
-        return instantRMS;
-    }
-
-    public void setInstantRMS(float instantRMS) {
-        this.instantRMS = instantRMS;
-    }
-
-    public float getSmoothRMS() {
-        return smoothRMS;
-    }
-
-    public void setSmoothRMS(float smoothRMS) {
-        this.smoothRMS = smoothRMS;
-    }
-
-    public float getCount() {
-        return count;
-    }
-
-    public void setCount(float count) {
-        this.count = count;
-    }
-
     public boolean isBeat() {
         return beat;
     }
@@ -155,19 +102,43 @@ public class SoundMetadata {
         this.beat = beat;
     }
 
-    public boolean isBeat2() {
-        return beat2;
+    public long getLast() {
+        return last;
     }
 
-    public void setBeat2(boolean beat2) {
-        this.beat2 = beat2;
+    public void setLast(long last) {
+        this.last = last;
     }
 
-    public boolean isBeat3() {
-        return beat3;
+    public long getLength() {
+        return length;
     }
 
-    public void setBeat3(boolean beat3) {
-        this.beat3 = beat3;
+    public void setLength(long length) {
+        this.length = length;
+    }
+
+    public float getH() {
+        return h;
+    }
+
+    public void setH(float h) {
+        this.h = h;
+    }
+
+    public float getS() {
+        return s;
+    }
+
+    public void setS(float s) {
+        this.s = s;
+    }
+
+    public float getV() {
+        return v;
+    }
+
+    public void setV(float v) {
+        this.v = v;
     }
 }

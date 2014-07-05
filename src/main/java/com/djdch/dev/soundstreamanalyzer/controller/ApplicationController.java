@@ -1,93 +1,133 @@
 package com.djdch.dev.soundstreamanalyzer.controller;
 
-import com.djdch.dev.soundstreamanalyzer.runnable.AudioInputListener;
-import com.djdch.dev.soundstreamanalyzer.runnable.MetersRefresher;
-import com.djdch.dev.soundstreamanalyzer.runnable.SoundAnalyzer;
-import com.djdch.dev.soundstreamanalyzer.runnable.SoundListener;
+import org.apache.log4j.Logger;
+
+import com.djdch.dev.serialtoarduinoled.serial.SerialLink;
+import com.djdch.dev.soundstreamanalyzer.ApplicationLauncher;
+import com.djdch.dev.soundstreamanalyzer.listener.AudioInputListener;
+import com.djdch.dev.soundstreamanalyzer.runnable.ColorUpdater;
+import com.djdch.dev.soundstreamanalyzer.runnable.ShutdownHandler;
 import com.djdch.dev.soundstreamanalyzer.swing.ApplicationFrame;
-import com.djdch.dev.soundstreamanalyzer.util.SampleQueue;
 
 import ddf.minim.AudioInput;
 import ddf.minim.Minim;
 import ddf.minim.javasound.JSMinim;
 
+import jssc.SerialPortException;
+
 public class ApplicationController {
 
-//    private static final String SERIAL_PORT = "/dev/tty.usbmodemfa1311";
-//    private static final String SERIAL_PORT = "/dev/tty.usbmodemfd121";
+    private final Logger logger = Logger.getLogger(getClass());
 
-    private final ApplicationFrame frame;
-    private final SampleQueue queue;
+    private final ApplicationLauncher launcher;
+    private final SerialLink serial;
 
-    private SoundListener listener;
-    private SoundAnalyzer analyzer;
-    private MetersRefresher refresher;
+    private ApplicationFrame frame;
+    private ColorUpdater updater;
+    private Minim minim;
 
-    public ApplicationController(ApplicationFrame frame) {
-        this.frame = frame;
+    public ApplicationController(ApplicationLauncher launcher) {
+        this.launcher = launcher;
 
-        queue = new SampleQueue();
+        frame = null;
+        serial = new SerialLink();
     }
 
     public void start() {
-//        frame.serial.setPortName(SERIAL_PORT);
-//        frame.serial.connect();
+        logger.debug("Starting SoundStreamAnalyzer");
 
-        AudioInputListener listener = new AudioInputListener(this);
-        listener.addObserver(frame.getMetersPanel());
+        Runtime.getRuntime().addShutdownHook(new Thread(new ShutdownHandler(this)));
 
-//        listener = new SoundListener(this);
-//        Thread listenerThread = new Thread(listener);
-//        listenerThread.start();
+        logger.debug("Creating listener");
+        AudioInputListener listener = new AudioInputListener();
 
-//        analyzer = new SoundAnalyzer(this);
-//        analyzer.addObserver(frame.getMetersPanel());
-//        Thread analyzerThread = new Thread(analyzer);
-//        analyzerThread.start();
+        logger.debug("Creating updater");
+        updater = new ColorUpdater(this);
+        listener.addObserver(updater);
 
-        refresher = new MetersRefresher(this, this.frame);
-        Thread refresherThread = new Thread(refresher);
-        refresherThread.start();
+        if (launcher.getSerial() != null) {
+            try {
+                logger.debug("Connecting serial link");
+                serial.setPortName(launcher.getSerial());
+                serial.connect();
+            } catch (SerialPortException e) {
+                logger.error("Exception occurred while connecting serial link", e);
+            }
+        }
 
-//        Executors.newSingleThreadExecutor().submit(listener);
+        if (launcher.isGUI()) {
+            logger.debug("Opening GUI");
+            frame = new ApplicationFrame(this);
+            frame.setVisible(true);
+            listener.addObserver(frame);
+        }
 
-        // FIXME
+        logger.debug("Starting Minim");
         JSMinim jsMinim = new JSMinim(this);
-        Minim minim = new Minim(jsMinim);
+        jsMinim.debugOff();
+        minim = new Minim(jsMinim);
 
-        AudioInput in = minim.getLineIn();
+        AudioInput in = minim.getLineIn(launcher.getInputType());
+//        AudioInput in = minim.getLineIn(launcher.getInputType(), 1024, 11025, 16);
 
-        if (frame.monitoring) {
+        if (launcher.isMonitored()) {
+            logger.debug("Enabling monitoring");
             in.enableMonitoring();
         }
 
+        logger.debug("Starting listener");
         listener.start(in);
-
         in.addListener(listener);
 
+        logger.debug("Starting updater");
+        Thread refresherThread = new Thread(updater);
+        refresherThread.start();
+
+        logger.info("SoundStreamAnalyzer started");
     }
 
     public void stop() {
-//        frame.serial.disconnect();
+        logger.debug("Stopping SoundStreamAnalyzer");
 
-//        minim.stop(); // TODO
+        logger.debug("Stopping updater");
+        updater.stop();
 
-//        listener.stop();
-//        analyzer.stop();
-        refresher.stop();
+        logger.debug("Stopping Minim");
+        minim.stop(); // TODO
 
-//        analyzer.deleteObserver(frame.getMetersPanel());
+        if (launcher.isGUI()) {
+            if (frame.isVisible()) {
+                // FIXME
+//                frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
 
-        frame.getMetersPanel().reset();
+                logger.debug("Closing GUI");
+                frame.setVisible(false);
+                logger.debug("Disposing GUI");
+                frame.dispose();
+            }
+        }
+
+        if (serial.isConnected()) {
+            try {
+                logger.debug("Disconnecting serial link");
+                serial.disconnect();
+            } catch (SerialPortException e) {
+                logger.error("Exception occurred while disconnecting serial link", e);
+            }
+        }
+
+        logger.info("SoundStreamAnalyzer stopped");
     }
 
-    public void failure(Exception e) {
-        frame.failure(e.getMessage());
-        stop();
-        e.printStackTrace();
+    public ApplicationLauncher getLauncher() {
+        return launcher;
     }
 
-    public SampleQueue getQueue() {
-        return queue;
+    public ApplicationFrame getFrame() {
+        return frame;
+    }
+
+    public SerialLink getSerial() {
+        return serial;
     }
 }
