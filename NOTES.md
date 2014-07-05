@@ -23,6 +23,8 @@
 * http://stackoverflow.com/questions/367706/is-there-a-good-command-line-argument-parser-for-java
 * http://commons.apache.org/proper/commons-cli/introduction.html
 
+* http://raspberrypi.stackexchange.com/questions/5475/usb-sound-card-found-but-no-output
+
 ## TODO
 
 * Do a `BaseRunner` for all runnable
